@@ -5,7 +5,6 @@
             <ul class="right hide-on-med-and-down">
                 <router-link
                         to="/"
-                        exact
                         active-class="active"
                         custom v-slot="{navigate}"
                 >
