@@ -1,40 +1,52 @@
 <template>
-  <div>
-    <h1>Главная</h1>
-    <div class="item" v-for="(item, index) in data" :key="item.id">
-      {{index + 1}} | {{item.description}} | <img :src="url+item.path">
+    <div>
+        <h1>Главная</h1>
+        <table class="highlight centered">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Описание недвижимости</th>
+                <th>Автор объявления</th>
+                <th>Изображение</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(post, index) in validPost" :key="post.id">
+                <td>{{index + 1}}</td>
+                <td>{{post.description}}</td>
+                <td>{{post.author}}</td>
+                <td><img :src="postsUrl + post.path"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h4>{{postsCount}} поста</h4>
+        <PostForm />
     </div>
-  </div>
 </template>
 
 <script>
-export default {
-  name: "home",
-  data() {
-    return {
-      data: [],
-      url: 'http://6sotok42.ru/api/data'
+    import {mapGetters, mapActions} from 'vuex'
+    import PostForm from '@/components/PostForm'
+    export default {
+        name: "home",
+        computed: mapGetters(["validPost", "postsCount", "postsUrl"]),
+        methods: mapActions(["fetchPosts"]),
+        components: {PostForm},
+        async mounted() {
+            this.fetchPosts()
+        },
     };
-  },
-  mounted() {
-    fetch(`${this.url}/data.php`)
-        .then(response => response.json())
-        .then(data => this.data = data);
-  },
-  methods: {},
-};
 </script>
 
 <style scoped>
 
-img {
-    width: auto;
-    height: 50px;
-}
+    img {
+        width: auto;
+        height: 50px;
+    }
 
-.item {
-    padding: 0;
-     height: 60px;
-}
+    tr {
+        cursor: pointer;
+    }
 
 </style>
