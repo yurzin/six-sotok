@@ -22,7 +22,6 @@
                 this.createPost({
                     description: this.description,
                     author: this.author,
-                    id: Date.now()
                 });
                 this.description = this.author = ''
             }

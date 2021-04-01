@@ -30,11 +30,11 @@
     export default {
         name: "home",
         computed: mapGetters(["validPost", "postsCount", "postsUrl"]),
-        methods: mapActions(["fetchPosts"]),
+        methods: mapActions(["fetchPosts", "createPost"]),
         components: {PostForm},
         async mounted() {
             this.fetchPosts()
-        },
+        }
     };
 </script>
 

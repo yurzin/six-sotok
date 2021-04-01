@@ -8,6 +8,17 @@ export default {
             const res = await fetch(`${url}/data.php`);
             const posts = await res.json();
             ctx.commit("updatePosts", posts)
+        },
+        async createPost(ctx, url = 'http://6sotok42.ru/api/data') {
+            const res = await fetch(`${url}/create_post.php`,
+                {
+                    method: "POST",
+                    mode: "cors",
+                    cache: "default",
+                    body: JSON.stringify(this.post)
+                });
+            const post = await res.json();
+            ctx.commit("createPost", post)
         }
     },
     mutations: {
@@ -15,7 +26,8 @@ export default {
             state.posts = posts
         },
         createPost(state, newPost) {
-            state.posts.unshift(newPost)
+            console.log(state);
+            //state.posts.unshift(newPost)
         }
     },
     getters: {
@@ -24,9 +36,9 @@ export default {
                 return p.description && p.author
             })
         },
-        allPosts(state) {
+  /*      allPosts(state) {
             return state.posts
-        },
+        },*/
         postsCount(state, getters) {
             return getters.validPost.length
         },
